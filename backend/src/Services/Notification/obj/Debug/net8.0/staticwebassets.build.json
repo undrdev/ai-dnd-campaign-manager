@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Fo/Ak2uG3bMW5RqZeVIXKUaDdcMhMrk4NXQdXA1RmJg=",
+  "Source": "DndAI.Services.Notification",
+  "BasePath": "_content/DndAI.Services.Notification",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

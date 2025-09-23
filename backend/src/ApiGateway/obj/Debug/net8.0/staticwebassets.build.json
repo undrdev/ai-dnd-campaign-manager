@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "fbm/7hiVm5cGaQL8+G5e9Nzxnr08SDG4UWzpg737PQg=",
+  "Source": "DndAI.ApiGateway",
+  "BasePath": "_content/DndAI.ApiGateway",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

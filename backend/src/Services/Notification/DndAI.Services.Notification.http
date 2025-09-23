@@ -1,0 +1,6 @@
+@DndAI.Services.Notification_HostAddress = http://localhost:5201
+
+GET {{DndAI.Services.Notification_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/DndAI.Services.Notification.props" />
+</Project>

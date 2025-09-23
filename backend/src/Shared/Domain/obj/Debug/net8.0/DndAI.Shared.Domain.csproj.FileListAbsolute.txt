@@ -1,0 +1,13 @@
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/bin/Debug/net8.0/DndAI.Shared.Domain.deps.json
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/bin/Debug/net8.0/DndAI.Shared.Domain.dll
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/bin/Debug/net8.0/DndAI.Shared.Domain.pdb
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/obj/Debug/net8.0/DndAI.Shared.Domain.csproj.AssemblyReference.cache
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/obj/Debug/net8.0/DndAI.Shared.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/obj/Debug/net8.0/DndAI.Shared.Domain.AssemblyInfoInputs.cache
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/obj/Debug/net8.0/DndAI.Shared.Domain.AssemblyInfo.cs
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/obj/Debug/net8.0/DndAI.Shared.Domain.csproj.CoreCompileInputs.cache
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/obj/Debug/net8.0/DndAI.Shared.Domain.sourcelink.json
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/obj/Debug/net8.0/DndAI.Shared.Domain.dll
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/obj/Debug/net8.0/refint/DndAI.Shared.Domain.dll
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/obj/Debug/net8.0/DndAI.Shared.Domain.pdb
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Domain/obj/Debug/net8.0/ref/DndAI.Shared.Domain.dll
