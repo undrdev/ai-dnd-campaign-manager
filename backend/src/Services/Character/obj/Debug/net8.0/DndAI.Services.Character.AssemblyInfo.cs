@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DndAI.Services.Character")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+016de65c0bccf04b11464570a19bb0efd0180b83")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85cbdb95a4cac72523786a575b5d6fac0f89f3a0")]
 [assembly: System.Reflection.AssemblyProductAttribute("DndAI.Services.Character")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DndAI.Services.Character")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
