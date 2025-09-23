@@ -1,0 +1,6 @@
+@DndAI.Services.Auth_HostAddress = http://localhost:5070
+
+GET {{DndAI.Services.Auth_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

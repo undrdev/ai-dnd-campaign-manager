@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "MfhIX+9cCAVfzF2yoCLiZLZTOyS3QtD9Bql4uS1Qxmg=",
+  "Source": "DndAI.Services.Campaign",
+  "BasePath": "_content/DndAI.Services.Campaign",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
