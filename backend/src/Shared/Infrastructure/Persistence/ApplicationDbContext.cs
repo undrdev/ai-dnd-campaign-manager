@@ -10,6 +10,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
     public DbSet<Campaign> Campaigns => Set<Campaign>();
     public DbSet<Character> Characters => Set<Character>();
     public DbSet<CampaignPlayer> CampaignPlayers => Set<CampaignPlayer>();
@@ -18,17 +19,43 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Configure User entity
+        // Configure User entity (extends IdentityUser<Guid>)
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id);
-            entity.HasIndex(e => e.Email).IsUnique();
-            entity.HasIndex(e => e.Username).IsUnique();
-            entity.Property(e => e.Email).HasMaxLength(256).IsRequired();
-            entity.Property(e => e.Username).HasMaxLength(50).IsRequired();
-            entity.Property(e => e.FirstName).HasMaxLength(100).IsRequired();
-            entity.Property(e => e.LastName).HasMaxLength(100).IsRequired();
-            entity.Property(e => e.SubscriptionTier).HasMaxLength(50);
+            entity.Property(e => e.FirstName).HasMaxLength(50).IsRequired();
+            entity.Property(e => e.LastName).HasMaxLength(50).IsRequired();
+            entity.Property(e => e.AvatarUrl).HasMaxLength(500);
+            entity.Property(e => e.Role).HasConversion<int>().IsRequired();
+            entity.Property(e => e.SubscriptionTier).HasConversion<int>().IsRequired();
+            
+            // Additional indexes
+            entity.HasIndex(e => e.Role);
+            entity.HasIndex(e => e.SubscriptionTier);
+            entity.HasIndex(e => e.IsActive);
+            entity.HasIndex(e => e.CreatedAt);
+        });
+
+        // Configure UserProfile entity
+        modelBuilder.Entity<UserProfile>(entity =>
+        {
+            entity.Property(e => e.Bio).HasMaxLength(1000);
+            entity.Property(e => e.Timezone).HasMaxLength(50);
+            entity.Property(e => e.PreferredLanguage).HasMaxLength(10).HasDefaultValue("en-US");
+            entity.Property(e => e.ExperienceLevel).HasConversion<int>().IsRequired();
+            entity.Property(e => e.FavoriteClasses).HasMaxLength(200);
+            entity.Property(e => e.PlayStyle).HasMaxLength(100);
+            entity.Property(e => e.SocialLinks).HasColumnType("jsonb");
+            
+            // Relationships
+            entity.HasOne(e => e.User)
+                .WithOne(u => u.Profile)
+                .HasForeignKey<UserProfile>(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+                
+            // Indexes
+            entity.HasIndex(e => e.UserId).IsUnique();
+            entity.HasIndex(e => e.ExperienceLevel);
+            entity.HasIndex(e => e.IsPublic);
         });
 
         // Configure Campaign entity
@@ -41,7 +68,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
             entity.Property(e => e.SystemVersion).HasMaxLength(50);
             
             entity.HasOne(e => e.DungeonMaster)
-                  .WithMany(u => u.Campaigns)
+                  .WithMany(u => u.OwnedCampaigns)
                   .HasForeignKey(e => e.DungeonMasterId)
                   .OnDelete(DeleteBehavior.Restrict);
         });
@@ -75,7 +102,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         modelBuilder.Entity<CampaignPlayer>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.Property(e => e.Role).HasMaxLength(50);
+            entity.Property(e => e.Role).HasConversion<int>().IsRequired();
+            entity.Property(e => e.Notes).HasMaxLength(500);
             
             entity.HasOne(e => e.Campaign)
                   .WithMany(c => c.Players)
@@ -83,7 +111,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
                   .OnDelete(DeleteBehavior.Cascade);
                   
             entity.HasOne(e => e.Player)
-                  .WithMany()
+                  .WithMany(u => u.CampaignMemberships)
                   .HasForeignKey(e => e.PlayerId)
                   .OnDelete(DeleteBehavior.Cascade);
                   

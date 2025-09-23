@@ -1,6 +1,10 @@
 using DndAI.Shared.Infrastructure;
+using DndAI.Services.Auth.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add Identity configuration first
+builder.Services.AddIdentityConfiguration(builder.Configuration);
 
 // Add shared infrastructure services
 builder.Services.AddSharedInfrastructure(builder.Configuration);
@@ -8,9 +12,12 @@ builder.Services.AddSharedApplication();
 builder.Services.AddSerilogLogging(builder.Configuration);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "DndAI Auth Service", Version = "v1" });
+});
 
 // Add health checks
 builder.Services.AddHealthChecks();
@@ -25,6 +32,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Add authentication and authorization
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Map controllers
+app.MapControllers();
 
 // Add health check endpoints
 app.MapHealthChecks("/health");

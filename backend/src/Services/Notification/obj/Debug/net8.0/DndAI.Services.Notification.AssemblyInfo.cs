@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DndAI.Services.Notification")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85cbdb95a4cac72523786a575b5d6fac0f89f3a0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6c55d4799d4bba360f9063d8adc81e5ea78a6df")]
 [assembly: System.Reflection.AssemblyProductAttribute("DndAI.Services.Notification")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DndAI.Services.Notification")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

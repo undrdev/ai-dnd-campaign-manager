@@ -133,3 +133,8 @@
 /Users/ethanstephens/Development/ai_dnd/backend/src/Services/Auth/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /Users/ethanstephens/Development/ai_dnd/backend/src/Services/Auth/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /Users/ethanstephens/Development/ai_dnd/backend/src/Services/Auth/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/ethanstephens/Development/ai_dnd/backend/src/Services/Auth/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.Internal.dll
+/Users/ethanstephens/Development/ai_dnd/backend/src/Services/Auth/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/Users/ethanstephens/Development/ai_dnd/backend/src/Services/Auth/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/ethanstephens/Development/ai_dnd/backend/src/Services/Auth/bin/Debug/net8.0/Microsoft.Extensions.Identity.Core.dll
+/Users/ethanstephens/Development/ai_dnd/backend/src/Services/Auth/bin/Debug/net8.0/Microsoft.Extensions.Identity.Stores.dll
