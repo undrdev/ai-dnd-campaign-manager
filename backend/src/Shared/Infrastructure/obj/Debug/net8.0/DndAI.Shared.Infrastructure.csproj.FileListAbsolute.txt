@@ -16,3 +16,5 @@
 /Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Infrastructure/obj/Debug/net8.0/refint/DndAI.Shared.Infrastructure.dll
 /Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Infrastructure/obj/Debug/net8.0/DndAI.Shared.Infrastructure.pdb
 /Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Infrastructure/obj/Debug/net8.0/ref/DndAI.Shared.Infrastructure.dll
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Infrastructure/bin/Debug/net8.0/DndAI.Shared.Infrastructure.runtimeconfig.json
+/Users/ethanstephens/Development/ai_dnd/backend/src/Shared/Infrastructure/obj/Debug/net8.0/DndAI.Shared.Infrastructure.genruntimeconfig.cache

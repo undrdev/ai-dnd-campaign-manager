@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: dndai-postgres
+    environment:
+      POSTGRES_DB: dndai_dev
+      POSTGRES_USER: developer
+      POSTGRES_PASSWORD: dev_password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U developer -d dndai_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    networks:
+      - dndai-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: dndai-redis
+    command: redis-server --appendonly yes --appendfsync everysec --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - dndai-network
+
+  # Optional: Redis Insight for development
+  redis-insight:
+    image: redislabs/redisinsight:latest
+    container_name: dndai-redis-insight
+    ports:
+      - "8001:8001"
+    volumes:
+      - redis_insight_data:/db
+    depends_on:
+      - redis
+    networks:
+      - dndai-network
+    profiles:
+      - dev-tools
+
+  # Optional: pgAdmin for development
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: dndai-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: developer@dndai.local
+      PGADMIN_DEFAULT_PASSWORD: admin_password
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - dndai-network
+    profiles:
+      - dev-tools
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  redis_insight_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  dndai-network:
+    driver: bridge
+    name: dndai-network
