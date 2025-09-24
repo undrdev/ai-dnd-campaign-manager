@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../build/DndAI.Services.Auth.props" />
-</Project>

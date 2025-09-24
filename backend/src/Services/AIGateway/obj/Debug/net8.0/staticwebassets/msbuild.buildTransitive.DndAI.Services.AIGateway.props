@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/DndAI.Services.AIGateway.props" />
-</Project>
