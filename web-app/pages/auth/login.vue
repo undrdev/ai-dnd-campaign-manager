@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen d-flex align-center justify-center bg-gradient-to-br from-neutral-50 to-neutral-100">
+  <div class="min-h-screen d-flex align-center justify-center" style="background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-container) 100%);">
     <VContainer fluid class="pa-0">
       <VRow no-gutters class="min-h-screen">
         <!-- Left Side - Branding/Hero -->
@@ -40,7 +40,7 @@
               <h1 class="text-h4 font-weight-bold text-primary mb-2">
                 Sign In
               </h1>
-              <p class="text-body-1 text-neutral-600">
+              <p class="text-body-1" style="color: var(--color-on-surface-variant);">
                 Welcome back to your campaigns
               </p>
             </div>
@@ -50,7 +50,7 @@
               <h1 class="text-h3 font-weight-bold text-primary mb-2">
                 Sign In
               </h1>
-              <p class="text-h6 text-neutral-600">
+              <p class="text-h6" style="color: var(--color-on-surface-variant);">
                 Access your D&D campaigns and characters
               </p>
             </div>
@@ -58,35 +58,30 @@
             <!-- Login Form -->
             <VForm
               ref="loginForm"
-              v-model="isFormValid"
               @submit.prevent="handleLogin"
             >
-              <VCard elevation="3" class="pa-6">
+              <VCard variant="elevated" class="pa-6">
                 <!-- Error Alert -->
                 <VAlert
                   v-if="authStore.error"
+                  v-model="showError"
                   type="error"
                   variant="tonal"
-                  class="mb-4"
                   closable
+                  class="mb-4"
                   @click:close="authStore.clearError()"
                 >
-                  <template #prepend>
-                    <VIcon icon="mdi-alert-circle" />
-                  </template>
                   {{ authStore.error }}
                 </VAlert>
 
                 <!-- Success Alert -->
                 <VAlert
                   v-if="successMessage"
+                  v-model="showSuccess"
                   type="success"
                   variant="tonal"
                   class="mb-4"
                 >
-                  <template #prepend>
-                    <VIcon icon="mdi-check-circle" />
-                  </template>
                   {{ successMessage }}
                 </VAlert>
 
@@ -96,31 +91,29 @@
                     v-model="credentials.email"
                     label="Email Address"
                     type="email"
+                    placeholder="Enter your email address"
                     variant="outlined"
-                    density="comfortable"
                     :rules="emailRules"
                     :disabled="authStore.isLoading"
-                    prepend-inner-icon="mdi-email"
-                    class="mb-4"
+                    prepend-icon="mdi-email"
                     autocomplete="email"
                     required
+                    class="mb-4"
                   />
 
                   <!-- Password Field -->
                   <VTextField
                     v-model="credentials.password"
-                    :label="'Password'"
-                    :type="showPassword ? 'text' : 'password'"
+                    label="Password"
+                    type="password"
+                    placeholder="Enter your password"
                     variant="outlined"
-                    density="comfortable"
                     :rules="passwordRules"
                     :disabled="authStore.isLoading"
-                    prepend-inner-icon="mdi-lock"
-                    :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-                    class="mb-4"
+                    prepend-icon="mdi-lock"
                     autocomplete="current-password"
                     required
-                    @click:append-inner="showPassword = !showPassword"
+                    class="mb-4"
                   />
 
                   <!-- Remember Me & Forgot Password -->
@@ -152,7 +145,6 @@
                     :loading="authStore.isLoading"
                     :disabled="!isFormValid || authStore.isLoading"
                     class="mb-4"
-                    elevation="2"
                   >
                     <VIcon icon="mdi-login" class="mr-2" />
                     Sign In
@@ -160,12 +152,12 @@
 
                   <!-- Divider -->
                   <VDivider class="my-6">
-                    <span class="text-neutral-500 px-4">or</span>
+                    <span class="px-4" style="color: var(--color-on-surface-variant);">or</span>
                   </VDivider>
 
                   <!-- Register Link -->
                   <div class="text-center">
-                    <p class="text-body-2 text-neutral-600 mb-2">
+                    <p class="text-body-2 mb-2" style="color: var(--color-on-surface-variant);">
                       Don't have an account?
                     </p>
                     <VBtn
@@ -186,7 +178,7 @@
 
             <!-- Footer Links -->
             <div class="text-center mt-8">
-              <p class="text-caption text-neutral-500">
+              <p class="text-caption" style="color: var(--color-on-surface-variant);">
                 By signing in, you agree to our 
                 <NuxtLink to="/terms" class="text-primary text-decoration-none">
                   Terms of Service
@@ -232,6 +224,36 @@ const loginForm = ref()
 const isFormValid = ref(false)
 const showPassword = ref(false)
 const successMessage = ref('')
+const showError = ref(true)
+const showSuccess = ref(true)
+
+// Validation errors
+const emailErrors = ref<string[]>([])
+const passwordErrors = ref<string[]>([])
+
+// Form validation
+const validateForm = () => {
+  emailErrors.value = []
+  passwordErrors.value = []
+  
+  // Run email rules
+  for (const rule of emailRules) {
+    const result = rule(credentials.email)
+    if (result !== true) {
+      emailErrors.value.push(result)
+    }
+  }
+  
+  // Run password rules
+  for (const rule of passwordRules) {
+    const result = rule(credentials.password)
+    if (result !== true) {
+      passwordErrors.value.push(result)
+    }
+  }
+  
+  isFormValid.value = emailErrors.value.length === 0 && passwordErrors.value.length === 0
+}
 
 // Form data
 const credentials = reactive({
@@ -253,6 +275,7 @@ const passwordRules = [
 
 // Methods
 const handleLogin = async () => {
+  validateForm()
   if (!isFormValid.value) return
 
   try {

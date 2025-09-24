@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100">
+  <div class="min-h-screen" style="background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-container) 100%);">
     <!-- Hero Section -->
     <VContainer fluid class="pa-0">
       <VRow no-gutters class="min-h-screen align-center">
@@ -8,10 +8,10 @@
             <!-- Logo/Brand -->
             <div class="mb-8">
               <VIcon icon="mdi-dice-d20" size="64" color="primary" class="mb-4" />
-              <h1 class="text-h2 text-md-h1 font-weight-bold text-primary mb-2">
+              <h1 class="text-h2 text-md-h1 font-weight-bold mb-2" style="color: var(--color-primary);">
                 D&D AI Campaign Manager
               </h1>
-              <p class="text-h6 text-neutral-600 font-weight-regular">
+              <p class="text-h6 font-weight-regular" style="color: var(--color-on-surface-variant);">
                 AI-powered campaign management for the modern Game Master
               </p>
             </div>
@@ -22,36 +22,36 @@
                 <VCol cols="12" sm="6" class="mb-4">
                   <div class="d-flex align-center mb-2">
                     <VIcon icon="mdi-brain" color="secondary" class="mr-3" />
-                    <span class="text-h6 font-weight-medium">AI-Powered</span>
+                    <span class="text-h6 font-weight-medium" style="color: var(--color-on-surface);">AI-Powered</span>
                   </div>
-                  <p class="text-body-2 text-neutral-600 ml-8">
+                  <p class="text-body-2 ml-8" style="color: var(--color-on-surface-variant);">
                     Intelligent NPC generation, world building, and campaign assistance
                   </p>
                 </VCol>
                 <VCol cols="12" sm="6" class="mb-4">
                   <div class="d-flex align-center mb-2">
                     <VIcon icon="mdi-account-group" color="secondary" class="mr-3" />
-                    <span class="text-h6 font-weight-medium">Collaborative</span>
+                    <span class="text-h6 font-weight-medium" style="color: var(--color-on-surface);">Collaborative</span>
                   </div>
-                  <p class="text-body-2 text-neutral-600 ml-8">
+                  <p class="text-body-2 ml-8" style="color: var(--color-on-surface-variant);">
                     Seamless player and GM collaboration with real-time updates
                   </p>
                 </VCol>
                 <VCol cols="12" sm="6" class="mb-4">
                   <div class="d-flex align-center mb-2">
                     <VIcon icon="mdi-devices" color="secondary" class="mr-3" />
-                    <span class="text-h6 font-weight-medium">Cross-Platform</span>
+                    <span class="text-h6 font-weight-medium" style="color: var(--color-on-surface);">Cross-Platform</span>
                   </div>
-                  <p class="text-body-2 text-neutral-600 ml-8">
+                  <p class="text-body-2 ml-8" style="color: var(--color-on-surface-variant);">
                     Access your campaigns anywhere - web, mobile, or desktop
                   </p>
                 </VCol>
                 <VCol cols="12" sm="6" class="mb-4">
                   <div class="d-flex align-center mb-2">
                     <VIcon icon="mdi-chart-line" color="secondary" class="mr-3" />
-                    <span class="text-h6 font-weight-medium">Analytics</span>
+                    <span class="text-h6 font-weight-medium" style="color: var(--color-on-surface);">Analytics</span>
                   </div>
-                  <p class="text-body-2 text-neutral-600 ml-8">
+                  <p class="text-body-2 ml-8" style="color: var(--color-on-surface-variant);">
                     Track player engagement and campaign progression insights
                   </p>
                 </VCol>
@@ -86,11 +86,15 @@
 
         <!-- Hero Image/Illustration -->
         <VCol cols="12" md="6" class="pa-0">
-          <div class="h-100 d-flex align-center justify-center bg-gradient-to-br from-primary-lighten-1 to-primary">
-            <div class="text-center text-white pa-8">
+          <div 
+            class="h-100 d-flex align-center justify-center"
+            style="background: linear-gradient(135deg, var(--color-primary-300) 0%, var(--color-primary) 100%);"
+          >
+            <div class="text-center pa-8" style="color: var(--color-on-primary);">
               <VIcon 
                 icon="mdi-castle" 
                 size="200" 
+                color="white"
                 class="opacity-80 mb-4 animate-pulse"
               />
               <h2 class="text-h4 font-weight-bold mb-4">
@@ -109,10 +113,10 @@
     <VContainer class="py-16">
       <VRow>
         <VCol cols="12" class="text-center mb-12">
-          <h2 class="text-h3 font-weight-bold text-primary mb-4">
+          <h2 class="text-h3 font-weight-bold mb-4" style="color: var(--color-primary);">
             Everything You Need to Run Epic Campaigns
           </h2>
-          <p class="text-h6 text-neutral-600 max-w-2xl mx-auto">
+          <p class="text-h6 max-w-2xl mx-auto" style="color: var(--color-on-surface-variant);">
             From character creation to world building, our AI-powered tools help you create 
             unforgettable D&D experiences for your players.
           </p>
@@ -129,8 +133,8 @@
                 color="primary" 
                 class="mb-4"
               />
-              <h3 class="text-h5 font-weight-bold mb-3">{{ feature.title }}</h3>
-              <p class="text-body-1 text-neutral-600">{{ feature.description }}</p>
+              <h3 class="text-h5 font-weight-bold mb-3" style="color: var(--color-on-surface);">{{ feature.title }}</h3>
+              <p class="text-body-1" style="color: var(--color-on-surface-variant);">{{ feature.description }}</p>
             </VCardText>
           </VCard>
         </VCol>
@@ -138,13 +142,13 @@
     </VContainer>
 
     <!-- Footer -->
-    <VFooter class="bg-neutral-900 text-white pa-8">
+    <VFooter class="pa-8" style="background-color: var(--color-surface-variant); color: var(--color-on-surface-variant);">
       <VContainer>
         <VRow>
           <VCol cols="12" md="6">
             <div class="d-flex align-center mb-4">
               <VIcon icon="mdi-dice-d20" size="32" color="secondary" class="mr-3" />
-              <span class="text-h6 font-weight-bold">D&D AI Campaign Manager</span>
+              <span class="text-h6 font-weight-bold" style="color: var(--color-on-surface);">D&D AI Campaign Manager</span>
             </div>
             <p class="text-body-2 opacity-80">
               Empowering Game Masters with AI-driven campaign management tools.

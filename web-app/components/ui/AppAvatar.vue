@@ -71,13 +71,13 @@
     </div>
 
     <!-- Loading overlay -->
-    <div v-if="imageLoading" class="app-avatar__loading">
-      <VIcon
-        icon="mdi-loading"
-        :size="Math.floor(size * 0.4)"
-        class="app-avatar__loading-icon"
-      />
-    </div>
+      <div v-if="imageLoading" class="app-avatar__loading">
+        <VIcon
+          icon="mdi-loading"
+          :size="Math.floor(numericSize * 0.4)"
+          class="app-avatar__loading-icon"
+        />
+      </div>
   </component>
 </template>
 

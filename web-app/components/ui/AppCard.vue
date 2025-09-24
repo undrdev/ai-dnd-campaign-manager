@@ -15,8 +15,8 @@
     <div v-if="glass" class="app-card__glass" />
     
     <!-- Header section -->
-    <div v-if="$slots.header || title || subtitle || actions" class="app-card__header">
-      <div v-if="$slots.header" class="app-card__header-content">
+    <div v-if="slots.header || title || subtitle" class="app-card__header">
+      <div v-if="slots.header" class="app-card__header-content">
         <slot name="header" />
       </div>
       <div v-else class="app-card__header-content">
@@ -37,28 +37,28 @@
         </div>
         
         <!-- Header actions -->
-        <div v-if="$slots.actions" class="app-card__actions">
+        <div v-if="slots.actions" class="app-card__actions">
           <slot name="actions" />
         </div>
       </div>
     </div>
 
     <!-- Media section -->
-    <div v-if="$slots.media || image" class="app-card__media">
-      <slot v-if="$slots.media" name="media" />
+    <div v-if="slots.media || image" class="app-card__media">
+      <slot v-if="slots.media" name="media" />
       <img v-else-if="image" :src="image" :alt="imageAlt" class="app-card__image" />
     </div>
 
     <!-- Content section -->
-    <div v-if="$slots.default || content" class="app-card__content">
-      <slot v-if="$slots.default" />
+    <div v-if="slots.default || content" class="app-card__content">
+      <slot v-if="slots.default" />
       <p v-else-if="content" class="app-card__text">
         {{ content }}
       </p>
     </div>
 
     <!-- Footer section -->
-    <div v-if="$slots.footer" class="app-card__footer">
+    <div v-if="slots.footer" class="app-card__footer">
       <slot name="footer" />
     </div>
 
@@ -162,6 +162,9 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   click: [event: Event]
 }>()
+
+// Slots
+const slots = useSlots()
 
 // Determine the component tag
 const tag = computed(() => {

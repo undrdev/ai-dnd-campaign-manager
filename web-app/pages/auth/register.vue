@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen d-flex align-center justify-center bg-gradient-to-br from-neutral-50 to-neutral-100">
+  <div class="min-h-screen d-flex align-center justify-center" style="background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-container) 100%);">
     <VContainer fluid class="pa-0">
       <VRow no-gutters class="min-h-screen">
         <!-- Left Side - Branding/Hero -->
@@ -40,7 +40,7 @@
               <h1 class="text-h4 font-weight-bold text-primary mb-2">
                 Create Account
               </h1>
-              <p class="text-body-1 text-neutral-600">
+              <p class="text-body-1" style="color: var(--color-on-surface-variant);">
                 Start your D&D journey today
               </p>
             </div>
@@ -50,34 +50,30 @@
               <h1 class="text-h3 font-weight-bold text-primary mb-2">
                 Create Account
               </h1>
-              <p class="text-h6 text-neutral-600">
+              <p class="text-h6" style="color: var(--color-on-surface-variant);">
                 Join the AI-powered D&D community
               </p>
             </div>
 
             <!-- Registration Form -->
-            <VForm
+            <form
               ref="registerForm"
-              v-model="isFormValid"
               @submit.prevent="handleRegister"
             >
-              <VCard elevation="3" class="pa-6">
+              <AppCard variant="elevated" size="md" class="pa-6">
                 <!-- Error Alert -->
-                <VAlert
+                <AppAlert
                   v-if="authStore.error"
+                  v-model="showError"
                   type="error"
                   variant="tonal"
-                  class="mb-4"
+                  :text="authStore.error"
                   closable
-                  @click:close="authStore.clearError()"
-                >
-                  <template #prepend>
-                    <VIcon icon="mdi-alert-circle" />
-                  </template>
-                  {{ authStore.error }}
-                </VAlert>
+                  class="mb-4"
+                  @close="authStore.clearError()"
+                />
 
-                <VCardText class="pa-0">
+                <div class="pa-0">
                   <!-- Name Fields -->
                   <VRow>
                     <VCol cols="6">
@@ -109,19 +105,25 @@
                   </VRow>
 
                   <!-- Email Field -->
-                  <VTextField
-                    v-model="userData.email"
+                  <FormField
                     label="Email Address"
-                    type="email"
-                    variant="outlined"
-                    density="comfortable"
-                    :rules="emailRules"
-                    :disabled="authStore.isLoading"
-                    prepend-inner-icon="mdi-email"
-                    class="mb-4"
-                    autocomplete="email"
+                    :validation-messages="emailErrors"
                     required
-                  />
+                    class="mb-4"
+                  >
+                    <AppInput
+                      v-model="userData.email"
+                      type="email"
+                      placeholder="Enter your email address"
+                      variant="outlined"
+                      size="md"
+                      :rules="emailRules"
+                      :disabled="authStore.isLoading"
+                      prepend-icon="mdi-email"
+                      autocomplete="email"
+                      required
+                    />
+                  </FormField>
 
                   <!-- Password Field -->
                   <VTextField
@@ -214,19 +216,18 @@
                   </VCheckbox>
 
                   <!-- Register Button -->
-                  <VBtn
+                  <AppButton
                     type="submit"
                     color="primary"
-                    size="large"
+                    size="lg"
                     block
                     :loading="authStore.isLoading"
                     :disabled="!isFormValid || authStore.isLoading"
+                    prepend-icon="mdi-account-plus"
                     class="mb-4"
-                    elevation="2"
                   >
-                    <VIcon icon="mdi-account-plus" class="mr-2" />
                     Create Account
-                  </VBtn>
+                  </AppButton>
 
                   <!-- Divider -->
                   <VDivider class="my-6">
@@ -250,9 +251,9 @@
                       Sign In
                     </VBtn>
                   </div>
-                </VCardText>
-              </VCard>
-            </VForm>
+                </div>
+              </AppCard>
+            </form>
           </div>
         </VCol>
       </VRow>
@@ -287,6 +288,10 @@ const registerForm = ref()
 const isFormValid = ref(false)
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
+const showError = ref(true)
+
+// Validation errors
+const emailErrors = ref<string[]>([])
 
 // Form data
 const userData = reactive({

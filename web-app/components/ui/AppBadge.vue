@@ -13,8 +13,8 @@
     />
     
     <!-- Content -->
-    <span v-if="variant !== 'dot' && (text || $slots.default)" class="app-badge__content">
-      <slot v-if="$slots.default" />
+    <span v-if="variant !== 'dot' && (text || slots.default)" class="app-badge__content">
+      <slot v-if="slots.default" />
       <span v-else-if="text">{{ text }}</span>
     </span>
     
@@ -63,6 +63,9 @@ const iconSize = computed(() => {
   return sizeMap[props.size]
 })
 
+// Slots
+const slots = useSlots()
+
 // Badge classes
 const badgeClasses = computed(() => [
   'app-badge',
@@ -73,7 +76,7 @@ const badgeClasses = computed(() => [
     'app-badge--rounded': props.rounded,
     'app-badge--pulse': props.pulse,
     'app-badge--with-icon': props.icon && props.variant !== 'dot',
-    'app-badge--icon-only': props.icon && !props.text && !props.$slots.default && props.variant !== 'dot'
+    'app-badge--icon-only': props.icon && !props.text && !slots.default && props.variant !== 'dot'
   }
 ])
 </script>
