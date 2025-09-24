@@ -1,14 +1,63 @@
 <template>
   <div id="app">
-    <VApp>
-      <VMain>
-        <NuxtPage />
-      </VMain>
-    </VApp>
+    <AppLayout
+      :show-sidebar="showSidebar"
+      :sidebar-permanent="sidebarPermanent"
+      :show-breadcrumb="showBreadcrumb"
+      :minimal-footer="minimalFooter"
+      :show-theme-toggle="showThemeToggle"
+      @toggle-theme="handleThemeToggle"
+    >
+      <NuxtPage />
+    </AppLayout>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '~/stores/auth'
+
+const authStore = useAuthStore()
+const route = useRoute()
+
+// Layout configuration based on current route
+const showSidebar = computed(() => {
+  // Show sidebar for authenticated users, except on auth pages
+  return authStore.isAuthenticated && !route.path.startsWith('/auth')
+})
+
+const sidebarPermanent = computed(() => {
+  // Make sidebar permanent on dashboard and main app pages
+  return authStore.isAuthenticated && ['/dashboard', '/campaigns', '/characters'].some(path => 
+    route.path.startsWith(path)
+  )
+})
+
+const showBreadcrumb = computed(() => {
+  // Show breadcrumb for authenticated users, except on dashboard
+  return authStore.isAuthenticated && route.path !== '/dashboard' && !route.path.startsWith('/auth')
+})
+
+const minimalFooter = computed(() => {
+  // Use minimal footer on auth pages and dashboard
+  return route.path.startsWith('/auth') || route.path === '/dashboard'
+})
+
+const showThemeToggle = computed(() => {
+  // Show theme toggle FAB on all pages except auth
+  return !route.path.startsWith('/auth')
+})
+
+// Theme handling
+const handleThemeToggle = (isDark: boolean) => {
+  // Additional theme toggle logic if needed
+  console.log('Theme toggled to:', isDark ? 'dark' : 'light')
+}
+
+// Initialize auth state on app load
+onMounted(() => {
+  authStore.initializeAuth()
+})
+
 // Global app configuration
 useHead({
   titleTemplate: (title) => {
