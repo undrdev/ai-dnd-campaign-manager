@@ -56,72 +56,75 @@
             </div>
 
             <!-- Login Form -->
-            <VForm
+            <form
               ref="loginForm"
-              v-model="isFormValid"
               @submit.prevent="handleLogin"
             >
-              <VCard elevation="3" class="pa-6">
+              <AppCard variant="elevated" size="md" class="pa-6">
                 <!-- Error Alert -->
-                <VAlert
+                <AppAlert
                   v-if="authStore.error"
+                  v-model="showError"
                   type="error"
                   variant="tonal"
-                  class="mb-4"
+                  :text="authStore.error"
                   closable
-                  @click:close="authStore.clearError()"
-                >
-                  <template #prepend>
-                    <VIcon icon="mdi-alert-circle" />
-                  </template>
-                  {{ authStore.error }}
-                </VAlert>
+                  class="mb-4"
+                  @close="authStore.clearError()"
+                />
 
                 <!-- Success Alert -->
-                <VAlert
+                <AppAlert
                   v-if="successMessage"
+                  v-model="showSuccess"
                   type="success"
                   variant="tonal"
+                  :text="successMessage"
                   class="mb-4"
-                >
-                  <template #prepend>
-                    <VIcon icon="mdi-check-circle" />
-                  </template>
-                  {{ successMessage }}
-                </VAlert>
+                />
 
-                <VCardText class="pa-0">
+                <div class="pa-0">
                   <!-- Email Field -->
-                  <VTextField
-                    v-model="credentials.email"
+                  <FormField
                     label="Email Address"
-                    type="email"
-                    variant="outlined"
-                    density="comfortable"
-                    :rules="emailRules"
-                    :disabled="authStore.isLoading"
-                    prepend-inner-icon="mdi-email"
-                    class="mb-4"
-                    autocomplete="email"
+                    :validation-messages="emailErrors"
                     required
-                  />
+                    class="mb-4"
+                  >
+                    <AppInput
+                      v-model="credentials.email"
+                      type="email"
+                      placeholder="Enter your email address"
+                      variant="outlined"
+                      size="md"
+                      :rules="emailRules"
+                      :disabled="authStore.isLoading"
+                      prepend-icon="mdi-email"
+                      autocomplete="email"
+                      required
+                    />
+                  </FormField>
 
                   <!-- Password Field -->
-                  <VTextField
-                    v-model="credentials.password"
-                    :label="'Password'"
-                    :type="showPassword ? 'text' : 'password'"
-                    variant="outlined"
-                    density="comfortable"
-                    :rules="passwordRules"
-                    :disabled="authStore.isLoading"
-                    prepend-inner-icon="mdi-lock"
-                    :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-                    class="mb-4"
-                    autocomplete="current-password"
+                  <FormField
+                    label="Password"
+                    :validation-messages="passwordErrors"
                     required
-                    @click:append-inner="showPassword = !showPassword"
-                  />
+                    class="mb-4"
+                  >
+                    <AppInput
+                      v-model="credentials.password"
+                      type="password"
+                      placeholder="Enter your password"
+                      variant="outlined"
+                      size="md"
+                      :rules="passwordRules"
+                      :disabled="authStore.isLoading"
+                      prepend-icon="mdi-lock"
+                      autocomplete="current-password"
+                      required
+                    />
+                  </FormField>
 
                   <!-- Remember Me & Forgot Password -->
                   <div class="d-flex justify-space-between align-center mb-6">
@@ -132,31 +135,30 @@
                       density="compact"
                       :disabled="authStore.isLoading"
                     />
-                    <VBtn
+                    <AppButton
                       variant="text"
                       color="primary"
-                      size="small"
+                      size="sm"
                       :disabled="authStore.isLoading"
                       @click="navigateToForgotPassword"
                     >
                       Forgot password?
-                    </VBtn>
+                    </AppButton>
                   </div>
 
                   <!-- Login Button -->
-                  <VBtn
+                  <AppButton
                     type="submit"
                     color="primary"
-                    size="large"
+                    size="lg"
                     block
                     :loading="authStore.isLoading"
                     :disabled="!isFormValid || authStore.isLoading"
+                    prepend-icon="mdi-login"
                     class="mb-4"
-                    elevation="2"
                   >
-                    <VIcon icon="mdi-login" class="mr-2" />
                     Sign In
-                  </VBtn>
+                  </AppButton>
 
                   <!-- Divider -->
                   <VDivider class="my-6">
@@ -168,17 +170,17 @@
                     <p class="text-body-2 text-neutral-600 mb-2">
                       Don't have an account?
                     </p>
-                    <VBtn
+                    <AppButton
                       variant="outlined"
                       color="primary"
-                      size="large"
+                      size="lg"
                       block
                       :disabled="authStore.isLoading"
+                      prepend-icon="mdi-account-plus"
                       @click="navigateToRegister"
                     >
-                      <VIcon icon="mdi-account-plus" class="mr-2" />
                       Create Account
-                    </VBtn>
+                    </AppButton>
                   </div>
                 </VCardText>
               </VCard>
@@ -232,6 +234,36 @@ const loginForm = ref()
 const isFormValid = ref(false)
 const showPassword = ref(false)
 const successMessage = ref('')
+const showError = ref(true)
+const showSuccess = ref(true)
+
+// Validation errors
+const emailErrors = ref<string[]>([])
+const passwordErrors = ref<string[]>([])
+
+// Form validation
+const validateForm = () => {
+  emailErrors.value = []
+  passwordErrors.value = []
+  
+  // Run email rules
+  for (const rule of emailRules) {
+    const result = rule(credentials.email)
+    if (result !== true) {
+      emailErrors.value.push(result)
+    }
+  }
+  
+  // Run password rules
+  for (const rule of passwordRules) {
+    const result = rule(credentials.password)
+    if (result !== true) {
+      passwordErrors.value.push(result)
+    }
+  }
+  
+  isFormValid.value = emailErrors.value.length === 0 && passwordErrors.value.length === 0
+}
 
 // Form data
 const credentials = reactive({
@@ -253,6 +285,7 @@ const passwordRules = [
 
 // Methods
 const handleLogin = async () => {
+  validateForm()
   if (!isFormValid.value) return
 
   try {

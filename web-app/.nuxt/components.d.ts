@@ -16,6 +16,8 @@ type LazyComponent<T> = (T & DefineComponent<HydrationStrategies, {}, {}, {}, {}
 
 export const DndDiceRoller: typeof import("../components/dnd/DiceRoller.vue")['default']
 export const FormsFormField: typeof import("../components/forms/FormField.vue")['default']
+export const FormsFormSelect: typeof import("../components/forms/FormSelect.vue")['default']
+export const FormsFormTextarea: typeof import("../components/forms/FormTextarea.vue")['default']
 export const LayoutAppBreadcrumb: typeof import("../components/layout/AppBreadcrumb.vue")['default']
 export const LayoutAppFooter: typeof import("../components/layout/AppFooter.vue")['default']
 export const LayoutAppHeader: typeof import("../components/layout/AppHeader.vue")['default']
@@ -24,6 +26,7 @@ export const LayoutAppSidebar: typeof import("../components/layout/AppSidebar.vu
 export const NavigationMainNavigation: typeof import("../components/navigation/MainNavigation.vue")['default']
 export const NavigationMobileMenu: typeof import("../components/navigation/MobileMenu.vue")['default']
 export const NavigationUserMenu: typeof import("../components/navigation/UserMenu.vue")['default']
+export const UiAppAlert: typeof import("../components/ui/AppAlert.vue")['default']
 export const UiAppAvatar: typeof import("../components/ui/AppAvatar.vue")['default']
 export const UiAppBadge: typeof import("../components/ui/AppBadge.vue")['default']
 export const UiAppButton: typeof import("../components/ui/AppButton.vue")['default']
@@ -59,6 +62,8 @@ export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components
 export const NuxtRouteAnnouncer: typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
 export const LazyDndDiceRoller: LazyComponent<typeof import("../components/dnd/DiceRoller.vue")['default']>
 export const LazyFormsFormField: LazyComponent<typeof import("../components/forms/FormField.vue")['default']>
+export const LazyFormsFormSelect: LazyComponent<typeof import("../components/forms/FormSelect.vue")['default']>
+export const LazyFormsFormTextarea: LazyComponent<typeof import("../components/forms/FormTextarea.vue")['default']>
 export const LazyLayoutAppBreadcrumb: LazyComponent<typeof import("../components/layout/AppBreadcrumb.vue")['default']>
 export const LazyLayoutAppFooter: LazyComponent<typeof import("../components/layout/AppFooter.vue")['default']>
 export const LazyLayoutAppHeader: LazyComponent<typeof import("../components/layout/AppHeader.vue")['default']>
@@ -67,6 +72,7 @@ export const LazyLayoutAppSidebar: LazyComponent<typeof import("../components/la
 export const LazyNavigationMainNavigation: LazyComponent<typeof import("../components/navigation/MainNavigation.vue")['default']>
 export const LazyNavigationMobileMenu: LazyComponent<typeof import("../components/navigation/MobileMenu.vue")['default']>
 export const LazyNavigationUserMenu: LazyComponent<typeof import("../components/navigation/UserMenu.vue")['default']>
+export const LazyUiAppAlert: LazyComponent<typeof import("../components/ui/AppAlert.vue")['default']>
 export const LazyUiAppAvatar: LazyComponent<typeof import("../components/ui/AppAvatar.vue")['default']>
 export const LazyUiAppBadge: LazyComponent<typeof import("../components/ui/AppBadge.vue")['default']>
 export const LazyUiAppButton: LazyComponent<typeof import("../components/ui/AppButton.vue")['default']>
