@@ -87,6 +87,9 @@ public static class IdentityConfiguration
         services.AddScoped<DndAI.Services.Auth.Application.Validators.RefreshTokenRequestValidator>();
         services.AddScoped<DndAI.Services.Auth.Application.Validators.VerifyEmailRequestValidator>();
 
+        // Add authorization policies
+        services.AddAuthorizationPolicies();
+
         return services;
     }
 }

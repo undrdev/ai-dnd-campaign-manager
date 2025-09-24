@@ -150,15 +150,23 @@ public class JwtTokenService : IJwtTokenService
     {
         var claims = new List<Claim>
         {
+            // Standard claims
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Name, user.UserName ?? string.Empty),
             new(ClaimTypes.Email, user.Email ?? string.Empty),
             new(ClaimTypes.GivenName, user.FirstName),
             new(ClaimTypes.Surname, user.LastName),
-            new("role", user.Role.ToString()),
-            new("subscription_tier", user.SubscriptionTier.ToString()),
-            new("is_active", user.IsActive.ToString()),
-            new("email_verified", user.EmailConfirmed.ToString()),
+            
+            // Custom claims for authorization
+            new(Application.Authorization.CustomClaimTypes.UserId, user.Id.ToString()),
+            new(Application.Authorization.CustomClaimTypes.Role, user.Role.ToString()),
+            new(Application.Authorization.CustomClaimTypes.SubscriptionTier, user.SubscriptionTier.ToString()),
+            new(Application.Authorization.CustomClaimTypes.AccountActive, user.IsActive.ToString()),
+            new(Application.Authorization.CustomClaimTypes.EmailVerified, user.EmailConfirmed.ToString()),
+            new(Application.Authorization.CustomClaimTypes.FirstName, user.FirstName),
+            new(Application.Authorization.CustomClaimTypes.LastName, user.LastName),
+            
+            // JWT standard claims
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
         };

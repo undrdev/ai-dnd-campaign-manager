@@ -1,7 +1,9 @@
+using DndAI.Services.Auth.Application.Authorization;
 using DndAI.Services.Auth.Application.Interfaces;
 using DndAI.Services.Auth.Application.Models;
 using DndAI.Services.Auth.Application.Validators;
 using DndAI.Shared.Domain.Entities;
+using DndAI.Shared.Domain.Enums;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -500,7 +502,7 @@ public class AuthController : ControllerBase
     /// Get current user profile
     /// </summary>
     [HttpGet("profile/{userId:guid}")]
-    [Authorize]
+    [Authorize(Policy = PolicyNames.RequireActiveAccount)]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetProfile(Guid userId)
@@ -538,4 +540,127 @@ public class AuthController : ControllerBase
                 "INTERNAL_ERROR"));
         }
     }
+
+    /// <summary>
+    /// Admin-only endpoint to get all users
+    /// </summary>
+    [HttpGet("admin/users")]
+    [Authorize(Policy = PolicyNames.RequireAdminRole)]
+    [ProducesResponseType(typeof(IEnumerable<UserDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status403Forbidden)]
+    public Task<IActionResult> GetAllUsers()
+    {
+        try
+        {
+            // This would be implemented in a real scenario
+            // For now, just return success to demonstrate authorization
+            return Task.FromResult<IActionResult>(Ok(new SuccessResponse(
+                true,
+                "Admin access granted - user list would be returned here")));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving all users");
+            return Task.FromResult<IActionResult>(StatusCode(500, new ErrorResponse(
+                "An error occurred retrieving users",
+                "INTERNAL_ERROR")));
+        }
+    }
+
+    /// <summary>
+    /// Admin-only endpoint to change user roles
+    /// </summary>
+    [HttpPut("admin/users/{userId:guid}/role")]
+    [Authorize(Policy = PolicyNames.CanManageUsers)]
+    [ProducesResponseType(typeof(SuccessResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> ChangeUserRole(Guid userId, [FromBody] ChangeUserRoleRequest request)
+    {
+        try
+        {
+            var currentUserId = Guid.Parse(User.FindFirst(CustomClaimTypes.UserId)?.Value ?? string.Empty);
+            
+            var result = await _userService.UpdateUserRoleAsync(userId, request.NewRole);
+            if (!result.Succeeded)
+            {
+                return BadRequest(new ErrorResponse(
+                    "Failed to change user role",
+                    AuthErrorCodes.InvalidInput,
+                    new Dictionary<string, string[]>
+                    {
+                        ["general"] = result.Errors.Select(e => e.Description).ToArray()
+                    }));
+            }
+
+            _logger.LogInformation("User role changed for {UserId} by admin {AdminId}", userId, currentUserId);
+            
+            return Ok(new SuccessResponse(
+                true,
+                "User role changed successfully"));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error changing user role for user: {UserId}", userId);
+            return StatusCode(500, new ErrorResponse(
+                "An error occurred changing user role",
+                "INTERNAL_ERROR"));
+        }
+    }
+
+    /// <summary>
+    /// Premium/Pro only endpoint to access advanced features
+    /// </summary>
+    [HttpGet("premium/advanced-features")]
+    [Authorize(Policy = PolicyNames.RequirePremiumSubscription)]
+    [ProducesResponseType(typeof(SuccessResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status403Forbidden)]
+    public Task<IActionResult> GetAdvancedFeatures()
+    {
+        try
+        {
+            var subscription = User.FindFirst(CustomClaimTypes.SubscriptionTier)?.Value;
+            
+            return Task.FromResult<IActionResult>(Ok(new SuccessResponse(
+                true,
+                $"Premium access granted - subscription tier: {subscription}")));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error accessing advanced features");
+            return Task.FromResult<IActionResult>(StatusCode(500, new ErrorResponse(
+                "An error occurred accessing advanced features",
+                "INTERNAL_ERROR")));
+        }
+    }
+
+    /// <summary>
+    /// Pro-only endpoint for analytics access
+    /// </summary>
+    [HttpGet("pro/analytics")]
+    [Authorize(Policy = PolicyNames.CanAccessAnalytics)]
+    [ProducesResponseType(typeof(SuccessResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status403Forbidden)]
+    public Task<IActionResult> GetAnalytics()
+    {
+        try
+        {
+            var subscription = User.FindFirst(CustomClaimTypes.SubscriptionTier)?.Value;
+            
+            return Task.FromResult<IActionResult>(Ok(new SuccessResponse(
+                true,
+                $"Analytics access granted - subscription tier: {subscription}")));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error accessing analytics");
+            return Task.FromResult<IActionResult>(StatusCode(500, new ErrorResponse(
+                "An error occurred accessing analytics",
+                "INTERNAL_ERROR")));
+        }
+    }
 }
+
+/// <summary>
+/// Request model for changing user roles
+/// </summary>
+public record ChangeUserRoleRequest(UserRole NewRole);
