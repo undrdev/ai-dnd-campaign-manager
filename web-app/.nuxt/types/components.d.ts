@@ -37,6 +37,7 @@ interface _GlobalComponents {
     'UiAppLoading': typeof import("../../components/ui/AppLoading.vue")['default']
     'UiAppModal': typeof import("../../components/ui/AppModal.vue")['default']
     'UiAppNotification': typeof import("../../components/ui/AppNotification.vue")['default']
+    'UiAppTooltip': typeof import("../../components/ui/AppTooltip.vue")['default']
     'NuxtWelcome': typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']
     'NuxtLayout': typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
     'NuxtErrorBoundary': typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']
@@ -84,6 +85,7 @@ interface _GlobalComponents {
     'LazyUiAppLoading': LazyComponent<typeof import("../../components/ui/AppLoading.vue")['default']>
     'LazyUiAppModal': LazyComponent<typeof import("../../components/ui/AppModal.vue")['default']>
     'LazyUiAppNotification': LazyComponent<typeof import("../../components/ui/AppNotification.vue")['default']>
+    'LazyUiAppTooltip': LazyComponent<typeof import("../../components/ui/AppTooltip.vue")['default']>
     'LazyNuxtWelcome': LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
     'LazyNuxtLayout': LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>
     'LazyNuxtErrorBoundary': LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']>

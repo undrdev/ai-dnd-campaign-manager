@@ -56,9 +56,8 @@
             </div>
 
             <!-- Registration Form -->
-            <VForm
+            <form
               ref="registerForm"
-              v-model="isFormValid"
               @submit.prevent="handleRegister"
             >
               <AppCard variant="elevated" size="md" class="pa-6">
@@ -74,7 +73,7 @@
                   @close="authStore.clearError()"
                 />
 
-                <VCardText class="pa-0">
+                <div class="pa-0">
                   <!-- Name Fields -->
                   <VRow>
                     <VCol cols="6">
@@ -252,9 +251,9 @@
                       Sign In
                     </VBtn>
                   </div>
-                </VCardText>
-              </VCard>
-            </VForm>
+                </div>
+              </AppCard>
+            </form>
           </div>
         </VCol>
       </VRow>
