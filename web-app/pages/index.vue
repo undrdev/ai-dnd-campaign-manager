@@ -60,26 +60,26 @@
 
             <!-- CTA Buttons -->
             <div class="d-flex flex-column flex-sm-row gap-4">
-              <AppButton
+              <VBtn
                 color="primary"
-                size="lg"
-                variant="elevated"
-                prepend-icon="mdi-account-plus"
+                size="large"
+                elevation="3"
                 class="px-8"
                 @click="navigateToRegister"
               >
+                <VIcon icon="mdi-account-plus" class="mr-2" />
                 Get Started Free
-              </AppButton>
-              <AppButton
+              </VBtn>
+              <VBtn
                 variant="outlined"
                 color="primary"
-                size="lg"
-                prepend-icon="mdi-login"
+                size="large"
                 class="px-8"
                 @click="navigateToLogin"
               >
+                <VIcon icon="mdi-login" class="mr-2" />
                 Sign In
-              </AppButton>
+              </VBtn>
             </div>
           </div>
         </VCol>

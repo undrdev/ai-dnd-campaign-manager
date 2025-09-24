@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen d-flex align-center justify-center bg-gradient-to-br from-neutral-50 to-neutral-100">
+  <div class="min-h-screen d-flex align-center justify-center" style="background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-container) 100%);">
     <VContainer fluid class="pa-0">
       <VRow no-gutters class="min-h-screen">
         <!-- Left Side - Branding/Hero -->
@@ -40,7 +40,7 @@
               <h1 class="text-h4 font-weight-bold text-primary mb-2">
                 Sign In
               </h1>
-              <p class="text-body-1 text-neutral-600">
+              <p class="text-body-1" style="color: var(--color-on-surface-variant);">
                 Welcome back to your campaigns
               </p>
             </div>
@@ -50,81 +50,71 @@
               <h1 class="text-h3 font-weight-bold text-primary mb-2">
                 Sign In
               </h1>
-              <p class="text-h6 text-neutral-600">
+              <p class="text-h6" style="color: var(--color-on-surface-variant);">
                 Access your D&D campaigns and characters
               </p>
             </div>
 
             <!-- Login Form -->
-            <form
+            <VForm
               ref="loginForm"
               @submit.prevent="handleLogin"
             >
-              <AppCard variant="elevated" size="md" class="pa-6">
+              <VCard variant="elevated" class="pa-6">
                 <!-- Error Alert -->
-                <AppAlert
+                <VAlert
                   v-if="authStore.error"
                   v-model="showError"
                   type="error"
                   variant="tonal"
-                  :text="authStore.error"
                   closable
                   class="mb-4"
-                  @close="authStore.clearError()"
-                />
+                  @click:close="authStore.clearError()"
+                >
+                  {{ authStore.error }}
+                </VAlert>
 
                 <!-- Success Alert -->
-                <AppAlert
+                <VAlert
                   v-if="successMessage"
                   v-model="showSuccess"
                   type="success"
                   variant="tonal"
-                  :text="successMessage"
                   class="mb-4"
-                />
+                >
+                  {{ successMessage }}
+                </VAlert>
 
-                <div class="pa-0">
+                <VCardText class="pa-0">
                   <!-- Email Field -->
-                  <FormField
+                  <VTextField
+                    v-model="credentials.email"
                     label="Email Address"
-                    :validation-messages="emailErrors"
+                    type="email"
+                    placeholder="Enter your email address"
+                    variant="outlined"
+                    :rules="emailRules"
+                    :disabled="authStore.isLoading"
+                    prepend-icon="mdi-email"
+                    autocomplete="email"
                     required
                     class="mb-4"
-                  >
-                    <AppInput
-                      v-model="credentials.email"
-                      type="email"
-                      placeholder="Enter your email address"
-                      variant="outlined"
-                      size="md"
-                      :rules="emailRules"
-                      :disabled="authStore.isLoading"
-                      prepend-icon="mdi-email"
-                      autocomplete="email"
-                      required
-                    />
-                  </FormField>
+                  />
 
                   <!-- Password Field -->
-                  <FormField
+                  <VTextField
+                    v-model="credentials.password"
                     label="Password"
-                    :validation-messages="passwordErrors"
+                    type="password"
+                    placeholder="Enter your password"
+                    variant="outlined"
+                    :rules="passwordRules"
+                    :disabled="authStore.isLoading"
+                    prepend-icon="mdi-lock"
+                    autocomplete="current-password"
                     required
                     class="mb-4"
-                  >
-                    <AppInput
-                      v-model="credentials.password"
-                      type="password"
-                      placeholder="Enter your password"
-                      variant="outlined"
-                      size="md"
-                      :rules="passwordRules"
-                      :disabled="authStore.isLoading"
-                      prepend-icon="mdi-lock"
-                      autocomplete="current-password"
-                      required
-                    />
-                  </FormField>
+                  />
 
                   <!-- Remember Me & Forgot Password -->
                   <div class="d-flex justify-space-between align-center mb-6">
@@ -135,60 +125,60 @@
                       density="compact"
                       :disabled="authStore.isLoading"
                     />
-                    <AppButton
+                    <VBtn
                       variant="text"
                       color="primary"
-                      size="sm"
+                      size="small"
                       :disabled="authStore.isLoading"
                       @click="navigateToForgotPassword"
                     >
                       Forgot password?
-                    </AppButton>
+                    </VBtn>
                   </div>
 
                   <!-- Login Button -->
-                  <AppButton
+                  <VBtn
                     type="submit"
                     color="primary"
-                    size="lg"
+                    size="large"
                     block
                     :loading="authStore.isLoading"
                     :disabled="!isFormValid || authStore.isLoading"
-                    prepend-icon="mdi-login"
                     class="mb-4"
                   >
+                    <VIcon icon="mdi-login" class="mr-2" />
                     Sign In
-                  </AppButton>
+                  </VBtn>
 
                   <!-- Divider -->
                   <VDivider class="my-6">
-                    <span class="text-neutral-500 px-4">or</span>
+                    <span class="px-4" style="color: var(--color-on-surface-variant);">or</span>
                   </VDivider>
 
                   <!-- Register Link -->
                   <div class="text-center">
-                    <p class="text-body-2 text-neutral-600 mb-2">
+                    <p class="text-body-2 mb-2" style="color: var(--color-on-surface-variant);">
                       Don't have an account?
                     </p>
-                    <AppButton
+                    <VBtn
                       variant="outlined"
                       color="primary"
-                      size="lg"
+                      size="large"
                       block
                       :disabled="authStore.isLoading"
-                      prepend-icon="mdi-account-plus"
                       @click="navigateToRegister"
                     >
+                      <VIcon icon="mdi-account-plus" class="mr-2" />
                       Create Account
-                    </AppButton>
+                    </VBtn>
                   </div>
-                </div>
-              </AppCard>
-            </form>
+                </VCardText>
+              </VCard>
+            </VForm>
 
             <!-- Footer Links -->
             <div class="text-center mt-8">
-              <p class="text-caption text-neutral-500">
+              <p class="text-caption" style="color: var(--color-on-surface-variant);">
                 By signing in, you agree to our 
                 <NuxtLink to="/terms" class="text-primary text-decoration-none">
                   Terms of Service

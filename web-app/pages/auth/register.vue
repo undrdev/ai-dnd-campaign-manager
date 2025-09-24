@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen d-flex align-center justify-center bg-gradient-to-br from-neutral-50 to-neutral-100">
+  <div class="min-h-screen d-flex align-center justify-center" style="background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-container) 100%);">
     <VContainer fluid class="pa-0">
       <VRow no-gutters class="min-h-screen">
         <!-- Left Side - Branding/Hero -->
@@ -40,7 +40,7 @@
               <h1 class="text-h4 font-weight-bold text-primary mb-2">
                 Create Account
               </h1>
-              <p class="text-body-1 text-neutral-600">
+              <p class="text-body-1" style="color: var(--color-on-surface-variant);">
                 Start your D&D journey today
               </p>
             </div>
@@ -50,7 +50,7 @@
               <h1 class="text-h3 font-weight-bold text-primary mb-2">
                 Create Account
               </h1>
-              <p class="text-h6 text-neutral-600">
+              <p class="text-h6" style="color: var(--color-on-surface-variant);">
                 Join the AI-powered D&D community
               </p>
             </div>
