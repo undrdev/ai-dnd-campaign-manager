@@ -21,13 +21,13 @@
 
         <!-- Message -->
         <div class="app-alert__message">
-          <slot v-if="$slots.default" />
+          <slot v-if="slots.default" />
           <span v-else-if="text">{{ text }}</span>
         </div>
 
         <!-- Actions -->
-        <div v-if="$slots.actions || actions.length > 0" class="app-alert__actions">
-          <slot v-if="$slots.actions" name="actions" />
+        <div v-if="slots.actions || actions.length > 0" class="app-alert__actions">
+          <slot v-if="slots.actions" name="actions" />
           <template v-else>
             <AppButton
               v-for="action in actions"
@@ -177,6 +177,9 @@ const actionButtonSize = computed(() => {
   return sizeMap[props.size] as 'xs' | 'sm' | 'md'
 })
 
+// Slots
+const slots = useSlots()
+
 const alertClasses = computed(() => [
   'app-alert',
   `app-alert--${props.variant}`,
@@ -186,7 +189,7 @@ const alertClasses = computed(() => [
     'app-alert--with-icon': props.showIcon,
     'app-alert--closable': props.closable,
     'app-alert--with-title': props.title,
-    'app-alert--with-actions': props.$slots.actions || props.actions.length > 0
+    'app-alert--with-actions': slots.actions || props.actions.length > 0
   }
 ])
 

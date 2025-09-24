@@ -63,7 +63,7 @@
       <span v-if="loading && loadingText" class="app-button__text">
         {{ loadingText }}
       </span>
-      <span v-else-if="$slots.default" class="app-button__text">
+      <span v-else-if="slots.default" class="app-button__text">
         <slot />
       </span>
       <span v-else-if="text" class="app-button__text">
@@ -166,6 +166,9 @@ const iconSize = computed(() => {
   return sizeMap[props.size]
 })
 
+// Slots
+const slots = useSlots()
+
 // Button classes
 const buttonClasses = computed(() => {
   return [
@@ -181,7 +184,7 @@ const buttonClasses = computed(() => {
       'app-button--rounded': props.rounded,
       'app-button--pill': props.pill,
       'app-button--square': props.square,
-      'app-button--icon-only': !props.text && !props.$slots.default && (props.prependIcon || props.appendIcon)
+      'app-button--icon-only': !props.text && !slots.default && (props.prependIcon || props.appendIcon)
     }
   ]
 })

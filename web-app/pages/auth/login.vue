@@ -182,9 +182,9 @@
                       Create Account
                     </AppButton>
                   </div>
-                </VCardText>
-              </VCard>
-            </VForm>
+                </div>
+              </AppCard>
+            </form>
 
             <!-- Footer Links -->
             <div class="text-center mt-8">

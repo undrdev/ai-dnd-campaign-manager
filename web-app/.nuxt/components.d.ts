@@ -15,6 +15,7 @@ type LazyComponent<T> = (T & DefineComponent<HydrationStrategies, {}, {}, {}, {}
 
 
 export const DndDiceRoller: typeof import("../components/dnd/DiceRoller.vue")['default']
+export const FormsFormCheckbox: typeof import("../components/forms/FormCheckbox.vue")['default']
 export const FormsFormField: typeof import("../components/forms/FormField.vue")['default']
 export const FormsFormSelect: typeof import("../components/forms/FormSelect.vue")['default']
 export const FormsFormTextarea: typeof import("../components/forms/FormTextarea.vue")['default']
@@ -61,6 +62,7 @@ export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
 export const NuxtRouteAnnouncer: typeof import("../node_modules/nuxt/dist/app/components/server-placeholder")['default']
 export const LazyDndDiceRoller: LazyComponent<typeof import("../components/dnd/DiceRoller.vue")['default']>
+export const LazyFormsFormCheckbox: LazyComponent<typeof import("../components/forms/FormCheckbox.vue")['default']>
 export const LazyFormsFormField: LazyComponent<typeof import("../components/forms/FormField.vue")['default']>
 export const LazyFormsFormSelect: LazyComponent<typeof import("../components/forms/FormSelect.vue")['default']>
 export const LazyFormsFormTextarea: LazyComponent<typeof import("../components/forms/FormTextarea.vue")['default']>
