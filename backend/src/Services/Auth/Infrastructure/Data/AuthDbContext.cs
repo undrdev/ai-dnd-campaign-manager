@@ -18,6 +18,7 @@ public class AuthDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 
     // DbSets for domain entities
     public DbSet<UserProfile> UserProfiles { get; set; }
+    public DbSet<DndAI.Services.Auth.Application.Services.RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -107,6 +108,39 @@ public class AuthDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
         builder.Entity<IdentityUserLogin<Guid>>().ToTable("UserLogins");
         builder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens");
         builder.Entity<IdentityRoleClaim<Guid>>().ToTable("RoleClaims");
+
+        // Configure RefreshToken entity
+        builder.Entity<DndAI.Services.Auth.Application.Services.RefreshToken>(entity =>
+        {
+            entity.ToTable("RefreshTokens");
+            
+            entity.Property(e => e.Token)
+                .IsRequired()
+                .HasMaxLength(500);
+                
+            entity.Property(e => e.CreatedAt)
+                .IsRequired()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                
+            entity.Property(e => e.ExpiresAt)
+                .IsRequired();
+                
+            entity.Property(e => e.IsRevoked)
+                .IsRequired()
+                .HasDefaultValue(false);
+                
+            // Relationships
+            entity.HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+                
+            // Indexes
+            entity.HasIndex(e => e.Token).IsUnique();
+            entity.HasIndex(e => e.UserId);
+            entity.HasIndex(e => e.ExpiresAt);
+            entity.HasIndex(e => e.IsRevoked);
+        });
 
         // Seed default roles
         SeedRoles(builder);

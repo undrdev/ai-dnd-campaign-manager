@@ -70,9 +70,22 @@ public static class IdentityConfiguration
         // Add custom password validators
         services.AddScoped<IPasswordValidator<User>, CustomPasswordValidator>();
 
+        // Configure JWT settings
+        services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+
         // Register application services
         services.AddScoped<DndAI.Services.Auth.Application.Interfaces.IUserService, 
                           DndAI.Services.Auth.Application.Services.UserService>();
+        services.AddScoped<DndAI.Services.Auth.Application.Interfaces.IJwtTokenService,
+                          DndAI.Services.Auth.Application.Services.JwtTokenService>();
+
+        // Register validators
+        services.AddScoped<DndAI.Services.Auth.Application.Validators.RegisterRequestValidator>();
+        services.AddScoped<DndAI.Services.Auth.Application.Validators.LoginRequestValidator>();
+        services.AddScoped<DndAI.Services.Auth.Application.Validators.ForgotPasswordRequestValidator>();
+        services.AddScoped<DndAI.Services.Auth.Application.Validators.ResetPasswordRequestValidator>();
+        services.AddScoped<DndAI.Services.Auth.Application.Validators.RefreshTokenRequestValidator>();
+        services.AddScoped<DndAI.Services.Auth.Application.Validators.VerifyEmailRequestValidator>();
 
         return services;
     }
