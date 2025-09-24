@@ -12,12 +12,7 @@
       <VListItem class="px-4 py-6 bg-primary">
         <template #prepend>
           <VAvatar size="48" :color="avatarColor">
-            <VImg
-              v-if="user?.profileImage"
-              :src="user.profileImage"
-              :alt="userFullName"
-            />
-            <span v-else class="text-h6 font-weight-bold text-white">
+            <span class="text-h6 font-weight-bold text-white">
               {{ userInitials }}
             </span>
           </VAvatar>

@@ -1,9 +1,9 @@
+/* Import Design Tokens */
+@import '~/design-system/tokens/tokens.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import Design Tokens */
-@import '../../design-system/tokens/tokens.css';
 
 /* 
  * Design tokens are now imported from design-system/tokens/tokens.css

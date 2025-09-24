@@ -176,7 +176,7 @@ export type DNDTypographyStyle = keyof typeof dndTypography
 
 // Design token theme interface
 export interface DesignTokenTheme {
-  colors: typeof lightTheme
+  colors: typeof lightTheme | typeof darkTheme
   typography: {
     fontFamilies: typeof fontFamilies
     fontWeights: typeof fontWeights

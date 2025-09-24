@@ -7,12 +7,7 @@
         class="user-menu-trigger"
       >
         <VAvatar size="36" :color="avatarColor">
-          <VImg
-            v-if="user?.profileImage"
-            :src="user.profileImage"
-            :alt="userFullName"
-          />
-          <span v-else class="text-h6 font-weight-bold">
+          <span class="text-h6 font-weight-bold">
             {{ userInitials }}
           </span>
         </VAvatar>
@@ -31,12 +26,7 @@
       <VCardText class="pb-0">
         <div class="d-flex align-center mb-3">
           <VAvatar size="48" :color="avatarColor" class="mr-3">
-            <VImg
-              v-if="user?.profileImage"
-              :src="user.profileImage"
-              :alt="userFullName"
-            />
-            <span v-else class="text-h6 font-weight-bold">
+            <span class="text-h6 font-weight-bold">
               {{ userInitials }}
             </span>
           </VAvatar>

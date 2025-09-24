@@ -218,7 +218,7 @@ export const lightTheme = {
   surfaceVariant: colors.neutral[100],
   surfaceContainer: colors.neutral[50],
   surfaceContainerHigh: colors.neutral[100],
-  surfaceContainerLow: colors.neutral[25] || colors.neutral[50],
+  surfaceContainerLow: colors.neutral[50],
 
   // Content colors
   onBackground: colors.neutral[900],

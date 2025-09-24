@@ -30,8 +30,8 @@
           }"
         >
           <VIcon
-            v-if="item.icon"
-            :icon="item.icon"
+            v-if="(item as BreadcrumbItem).icon"
+            :icon="(item as BreadcrumbItem).icon"
             size="16"
             class="mr-2"
           />

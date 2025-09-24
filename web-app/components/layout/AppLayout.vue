@@ -171,7 +171,7 @@ interface Notification {
   color?: string
   icon?: string
   timeout?: number
-  location?: string
+  location?: 'top' | 'bottom' | 'left' | 'right'
   multiLine?: boolean
   action?: NotificationAction
   actionColor?: string
@@ -245,8 +245,9 @@ const emit = defineEmits<{
 }>()
 
 // Vuetify theme
+import { useTheme } from 'vuetify'
 const theme = useTheme()
-const { $vuetify } = useNuxtApp()
+const { $vuetify } = useNuxtApp() as any
 
 // Reactive state
 const mobileDrawer = ref(false)
