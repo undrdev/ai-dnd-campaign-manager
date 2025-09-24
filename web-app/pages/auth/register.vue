@@ -61,21 +61,18 @@
               v-model="isFormValid"
               @submit.prevent="handleRegister"
             >
-              <VCard elevation="3" class="pa-6">
+              <AppCard variant="elevated" size="md" class="pa-6">
                 <!-- Error Alert -->
-                <VAlert
+                <AppAlert
                   v-if="authStore.error"
+                  v-model="showError"
                   type="error"
                   variant="tonal"
-                  class="mb-4"
+                  :text="authStore.error"
                   closable
-                  @click:close="authStore.clearError()"
-                >
-                  <template #prepend>
-                    <VIcon icon="mdi-alert-circle" />
-                  </template>
-                  {{ authStore.error }}
-                </VAlert>
+                  class="mb-4"
+                  @close="authStore.clearError()"
+                />
 
                 <VCardText class="pa-0">
                   <!-- Name Fields -->
@@ -109,19 +106,25 @@
                   </VRow>
 
                   <!-- Email Field -->
-                  <VTextField
-                    v-model="userData.email"
+                  <FormField
                     label="Email Address"
-                    type="email"
-                    variant="outlined"
-                    density="comfortable"
-                    :rules="emailRules"
-                    :disabled="authStore.isLoading"
-                    prepend-inner-icon="mdi-email"
-                    class="mb-4"
-                    autocomplete="email"
+                    :validation-messages="emailErrors"
                     required
-                  />
+                    class="mb-4"
+                  >
+                    <AppInput
+                      v-model="userData.email"
+                      type="email"
+                      placeholder="Enter your email address"
+                      variant="outlined"
+                      size="md"
+                      :rules="emailRules"
+                      :disabled="authStore.isLoading"
+                      prepend-icon="mdi-email"
+                      autocomplete="email"
+                      required
+                    />
+                  </FormField>
 
                   <!-- Password Field -->
                   <VTextField
@@ -214,19 +217,18 @@
                   </VCheckbox>
 
                   <!-- Register Button -->
-                  <VBtn
+                  <AppButton
                     type="submit"
                     color="primary"
-                    size="large"
+                    size="lg"
                     block
                     :loading="authStore.isLoading"
                     :disabled="!isFormValid || authStore.isLoading"
+                    prepend-icon="mdi-account-plus"
                     class="mb-4"
-                    elevation="2"
                   >
-                    <VIcon icon="mdi-account-plus" class="mr-2" />
                     Create Account
-                  </VBtn>
+                  </AppButton>
 
                   <!-- Divider -->
                   <VDivider class="my-6">
@@ -287,6 +289,10 @@ const registerForm = ref()
 const isFormValid = ref(false)
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
+const showError = ref(true)
+
+// Validation errors
+const emailErrors = ref<string[]>([])
 
 // Form data
 const userData = reactive({
